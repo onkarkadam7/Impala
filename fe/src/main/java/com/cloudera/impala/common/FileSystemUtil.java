@@ -80,16 +80,40 @@ public class FileSystemUtil {
     return numFiles;
   }
 
+  public static boolean isHdfsEncryptionSupported() {
+    if (hdfsEncryptionSupport == null) {
+
+      Method m = null;
+
+      try {
+        m = HdfsAdmin.class.getMethod("getEncryptionZoneForPath", Path.class);
+      } catch (NoSuchMethodException e) {
+        // This version of Hadoop does not support HdfsAdmin.getEncryptionZoneForPath().
+        // Hadoop 2.6.0 introduces this new method.
+      }
+
+      hdfsEncryptionSupport = (m != null);
+    }
+
+    return hdfsEncryptionSupport;
+  }
+
   /**
    * Returns true if path p1 and path p2 are in the same encryption zone.
    */
   private static boolean arePathsInSameEncryptionZone(FileSystem fs, Path p1,
       Path p2) throws IOException {
     HdfsAdmin hdfsAdmin = new HdfsAdmin(fs.getUri(), CONF);
+
+    if (!FileSystemUtil.isHdfsEncryptionSupported())
+      return true;
+
     EncryptionZone z1 = hdfsAdmin.getEncryptionZoneForPath(p1);
     EncryptionZone z2 = hdfsAdmin.getEncryptionZoneForPath(p2);
+
     if (z1 == null && z2 == null) return true;
     if (z1 == null || z2 == null) return false;
+
     return z1.equals(z2);
   }
 
