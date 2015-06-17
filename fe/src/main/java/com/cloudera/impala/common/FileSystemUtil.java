@@ -80,6 +80,8 @@ public class FileSystemUtil {
     return numFiles;
   }
 
+  private static Boolean hdfsEncryptionSupport;
+
   public static boolean isHdfsEncryptionSupported() {
     if (hdfsEncryptionSupport == null) {
 
