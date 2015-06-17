@@ -35,6 +35,8 @@ import org.apache.hadoop.hdfs.client.HdfsAdmin;
 import org.apache.hadoop.hdfs.protocol.EncryptionZone;
 import org.apache.log4j.Logger;
 
+import java.lang.reflect.Method;
+
 import com.google.common.base.Preconditions;
 
 /**
