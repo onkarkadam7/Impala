@@ -31,8 +31,8 @@ IF (DEFINED ENV{BOOST_ROOT})
     # intentionally to provide what a wide range of versions expects.
     set(Boost_NO_SYSTEM_PATHS true)
     set(BOOST_ROOT $ENV{BOOST_ROOT})
-    set(BOOST_LIBRARYDIR $ENV{BOOST_ROOT}/lib)
-    set(BOOST_INCLUDEDIR $ENV{BOOST_ROOT}/include)
+    set(BOOST_LIBRARYDIR $ENV{BOOST_ROOT}/stage/lib)
+    set(BOOST_INCLUDEDIR $ENV{BOOST_ROOT})
     set(Boost_INCLUDE_DIR ${BOOST_INCLUDEDIR})
 ENDIF (DEFINED ENV{BOOST_ROOT})
 
